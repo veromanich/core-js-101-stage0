@@ -343,15 +343,12 @@ function getDigitalRoot(num) {
 function isBracketsBalanced(str) {
   const pairs = ['[]', '{}', '()', '<>'];
   let current = str;
+  let prev;
 
-  while (true) {
-    let replaced = current;
-    pairs.forEach((pair) => {
-      replaced = replaced.replace(pair, '');
-    });
-    if (replaced === current) break;
-    current = replaced;
-  }
+  do {
+    prev = current;
+    current = pairs.reduce((acc, pair) => acc.split(pair).join(''), current);
+  } while (current.length !== prev.length);
 
   return current.length === 0;
 }
